@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Home{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+    <div class="container-fluid text-center"><a href="/"><button class="btn btn-success w-50" type="button">Home</button></a> </div>
+<div class="container text-center w-50 mt-5 pt-5">
+<h2 class="alert alert-info" style="font-family: Lucida">User Registeration</h2>
+    {% load widget_tweaks %}
+<form method="post">
+    {% csrf_token %}
+
+<!-- error section for form errors -->
+    {% if errors %}
+        {% for error in errors.values %}
+            <h3 class="alert-danger text-center">{{ error }}</h3><br>
+         {% endfor %}
+    {% endif %}
+
+<!--error msg if user is already exist-->
+{% if msg %}
+    <h3 class="alert-danger text-center">{{ msg }}</h3><br>
+ {% endif %}
+
+<!-- form fields -->
+
+    {% render_field form.username class="form-control mt-2" placeholder="Enter Username" %}
+    {% render_field form.password class="form-control mt-2" placeholder="Enter Password" %}
+     {% render_field form.password2 class="form-control mt-2" placeholder="Enter Password Again" %}<br>
+    <input type="submit" value="Register" class="btn btn-success" style="min-width: 60%">
+
+</form>
+</div>
+{% endblock %}
+</body>
+</html>

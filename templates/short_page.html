@@ -1,0 +1,27 @@
+{% extends 'user_profile.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Short Page {% endblock %}</title>
+</head>
+<body>
+{% block profile_content %}
+     <div class="container text-center p-4 bg-black">
+        <h2 class="alert-dark">Click & Upload Image</h2>
+            {% load widget_tweaks %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- form errors section -->
+        {% if errors %}
+            {% for error in errors %}
+                <h3 class="alert-danger">{{ error }}</h3>
+            {% endfor %}
+            {% endif %}
+            {% render_field form.photo class="form-control" placeholder="Enter Your Name" %}<br>
+            <input type="submit" class="btn btn-success" value="upload"><br>
+        </form>
+     </div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends 'user_profile.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Profile Update {% endblock %}</title>
+</head>
+<body>
+{% block profile_content %}
+    <div class="container text-center p-4 bg-black">
+        <h2 class="alert-dark">Enter Profile Details</h2>
+            {% load widget_tweaks %}
+        <form method="post">
+            {% csrf_token %}
+            <!-- form errors section -->
+        {% if errors %}
+            {% for error in errors %}
+                <h3 class="alert-danger">{{ error }}</h3>
+            {% endfor %}
+            {% endif %}
+            {% render_field form.name class="form-control" placeholder="Enter Your Name" %}<br>
+            {% render_field form.location class="form-control" placeholder="Enter Your Location" %}<br>
+            {% render_field form.state class="form-control" placeholder="Enter Your State" %}<br>
+            {% render_field form.gender class="form-control" %}<br>
+            <input type="submit" class="btn btn-success"><br>
+        </form>
+    </div>
+{% endblock %}
+</body>
+</html>

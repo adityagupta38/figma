@@ -1,0 +1,21 @@
+ul{
+    list-style: none;
+}
+ li{
+    display: inline-block;
+     border: cornflowerblue;
+     padding: 5px;
+}
+ a{
+     text-decoration: none;
+ }
+ #nav{
+     background-color: cornflowerblue;
+
+ }
+li :hover{
+            background-color: #145ee8;
+            color: aliceblue;
+            padding: 5px;
+
+        }

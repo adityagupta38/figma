@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Profile {% endblock %}</title>
+</head>
+<body>
+{% block content %}
+    <!-- navbar section -->
+    {% block navbar %}
+<h2>
+        <div id="nav">
+        <div class="row">
+
+            <div class="col-sm-8">
+            <ul>
+                <li><a href="{% url 'user_profile' id %}">Home</a></li>
+                <li><a href="{% url 'upload_post' id %}">Short Page</a></li>
+            </ul>
+            </div>
+            <div class="col-sm-4 text-end">
+                <a href="{% url 'logout' %}"><button type="button" class="btn btn-dark p-4">Logout</button></a>
+            </div>
+
+        </div>
+        </div>
+</h2>
+    {% endblock %}
+    <!-- profile Section -->
+    {% block profile_content %}
+<div class="container-fluid">
+<div class="container bg-light">
+    {% if profile %}
+        <h2 class="alert alert-info">
+        <div class="row">
+        <div class="col-sm-8 text-center">
+            Profile Details
+        </div>
+        <div class="col-sm-4 text-end">
+            <a href="{% url 'profile_update' id %}"><button type="button" class="btn btn-outline-danger w-50">Click to edit Details</button> </a>
+        </div>
+        </div>
+        </h2>
+        <h3 class="alert-dark">{{ profile.name }}</h3>
+        <div class="row">
+        <div class="col-sm-6">
+            <h4>Location: {{ profile.location }} </h4>
+        </div>
+         <div class="col-sm-6">
+            <h4>State: {{ profile.state }} </h4>
+        </div>
+        </div>
+        <h4>Gender: {{ profile.gender }}</h4>
+        </div>
+        {% else %}
+        <div class="container text-center p-4 bg-black">
+        <h2 class="alert-dark">Enter Profile Details</h2>
+            {% load widget_tweaks %}
+        <form method="post" action="{% url 'add_user_profile' id %}">
+            {% csrf_token %}
+            <!-- form errors section -->
+        {% if messages %}
+            {% for message in messages %}
+                <h3 class="alert-danger">{{ message }}</h3>
+            {% endfor %}
+            {% endif %}
+            {% render_field form.name class="form-control" placeholder="Enter Your Name" %}<br>
+            {% render_field form.location class="form-control" placeholder="Enter Your Location" %}<br>
+            {% render_field form.state class="form-control" placeholder="Enter Your State" %}<br>
+            {% render_field form.gender class="form-control" %}<br>
+            <input type="submit" class="btn btn-success"><br>
+        </form>
+        </div>
+
+    {% endif %}
+
+        <br>
+
+        <h1 class="alert alert-success text-center">Feed</h1>
+        {% if posts %}
+            <div class="container-fluid bg-light">
+            {% for post in posts %}
+                <div class="container text-center mt-4 bg-black">
+                <img src="{{ post.photo.url }}" alt="User Posts" width="30%">
+                </div>
+            {% endfor %}
+            </div>
+            {% else %}
+            <h2 class="alert alert-dark text-center mt-4">No Posts Available Yet!</h2>
+        {% endif %}
+ </div>
+     {% endblock %}
+ {% endblock %}
+</body>
+</html>
